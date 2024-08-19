@@ -6,10 +6,10 @@ class Game{
 private:
 
     // Variables
-    sf::RenderWindow* window;
+    sf::RenderWindow *window;
     sf::Event event;
 
-    const float dt = 1.0f / 60.0f;
+    float dt; // time taken per frame (update + render)
     sf::Clock _clock;
 
     // Init functions
@@ -22,5 +22,9 @@ public:
     virtual ~Game();
 
     // Main functions
+    void updateDT();
+    void updateSFMLEvents();
+    void Update();
+    void Render();
     void Run();
 };

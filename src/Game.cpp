@@ -13,8 +13,34 @@ Game::~Game(){
     delete this->window;
 }
 
+void Game::updateDT(){
+
+}
+
+void Game::updateSFMLEvents(){
+    while(this->window->pollEvent(event)){
+        switch (event.type){
+            case sf::Event::Closed:
+                this->window->close();
+                break;
+        }
+    }
+}
+
+void Game::Update(){
+    this->updateDT();
+    this->updateSFMLEvents();
+}
+
+void Game::Render(){
+    this->window->clear();
+    
+    this->window->display();
+}
+
 void Game::Run(){
     while ( this->window->isOpen() ){
-        // update + render functions will go here
+        this->Update();
+        this->Render();
     }
 }
