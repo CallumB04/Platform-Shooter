@@ -1,5 +1,6 @@
 #pragma once
 #include "includes.h"
+#include "GameState.h"
 
 class Game{
 
@@ -12,8 +13,11 @@ private:
     float dt; // time taken per frame (update + render)
     sf::Clock _clock;
 
+    std::stack<State*> states;
+
     // Init functions
     void initWindow();
+    void initStates();
 
 public:
 
@@ -21,10 +25,13 @@ public:
     Game();
     virtual ~Game();
 
-    // Main functions
+    // Other functions
+    void endApp();
     void updateDT();
     void updateSFMLEvents();
-    void Update();
-    void Render();
-    void Run();
+
+    // Main functions
+    void update();
+    void render();
+    void run();
 };

@@ -3,8 +3,9 @@
 #include <SFML/System.hpp>
 
 #include <iostream>
-#include <memory>
 #include <stack>
+#include <map>
+#include <vector>
 
 #define WINDOW_WIDTH 1280
 #define WINDOW_HEIGHT 720
