@@ -2,7 +2,7 @@
 
 // Constructor / Destructor
 
-GameState::GameState(sf::RenderWindow* window) : State(window)
+GameState::GameState(std::shared_ptr<sf::RenderWindow> &window) : State(window)
 {
 }
 
@@ -24,7 +24,7 @@ void GameState::endState()
 
 // Update Functions
 
-void GameState::handleEvents(sf::RenderWindow *window, sf::Event event)
+void GameState::handleEvents(std::shared_ptr<sf::RenderWindow> &window, sf::Event event)
 {
     while(window->pollEvent(event)){
         switch(event.type){
@@ -42,7 +42,7 @@ void GameState::updateKeybinds(const float &dt)
 
 void GameState::updateEndingCheck()
 {
-    // Checks for ways the state could end
+    // Checks for ways the state could end. then set this->quit to true
 }
 
 // Main Functions
@@ -53,7 +53,7 @@ void GameState::update(const float &dt)
     this->updateEndingCheck();
 }
 
-void GameState::render(sf::RenderTarget* target)
+void GameState::render(std::shared_ptr<sf::RenderWindow> &window)
 {
 
 }

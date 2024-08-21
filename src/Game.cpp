@@ -5,19 +5,17 @@
 Game::Game(){
 
     // Initialising Window and config
-    this->window = new sf::RenderWindow(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Platform-Shooter", sf::Style::Close);
+    this->window = std::make_shared<sf::RenderWindow>(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Platform-Shooter", sf::Style::Close);
     this->window->setFramerateLimit(60);
 
     // Pushing states to the stack
-    this->states.push(new GameState(this->window));
+    this->states.push(std::make_unique<GameState>(this->window));
 }
 
 Game::~Game(){
-    delete this->window;
 
     // removing all states from stack
     while(!this->states.empty()){
-        delete this->states.top();
         this->states.pop();
     }
 }
@@ -50,7 +48,6 @@ void Game::update(){
         // removes state from stack when moving to new state in the game
         if (this->states.top()->getQuit()){
             this->states.top()->endState(); // anything necessary before deleting state (e.g: saving progress)
-            delete this->states.top();
             this->states.pop();
         }
     }

@@ -7,13 +7,14 @@ class Game{
 private:
 
     // Variables
-    sf::RenderWindow *window;
+    std::shared_ptr<sf::RenderWindow> window;
     sf::Event event;
 
     float dt; // time taken per frame (update + render)
     sf::Clock _clock;
 
-    std::stack<State*> states;
+    // std::stack<State*> states;
+    std::stack<std::unique_ptr<State>> states;
 
 public:
 

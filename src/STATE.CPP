@@ -3,7 +3,7 @@
 
 // Constructor / Destructor
 
-State::State(sf::RenderWindow *window)
+State::State(std::shared_ptr<sf::RenderWindow> &window)
 {
     this->window = window;
 }
