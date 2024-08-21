@@ -10,6 +10,7 @@ Game::Game(){
 
     // Pushing states to the stack
     this->states.push(std::make_unique<GameState>(this->window));
+    this->states.push(std::make_unique<MainMenuState>(this->window));
 }
 
 Game::~Game(){
