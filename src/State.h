@@ -19,6 +19,7 @@ public:
 
     // Main Functions
     // Any class that inherits State class, must have an Update and Render function
+    virtual void handleEvents(sf::RenderWindow* window, sf::Event event) = 0;
     virtual void updateKeybinds(const float& dt) = 0;
     virtual void updateEndingCheck() = 0; // Checks if a State needs to be removed (e.g: quit game, unpaused)
     virtual void update(const float& dt) = 0;

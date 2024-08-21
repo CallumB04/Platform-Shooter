@@ -15,10 +15,6 @@ private:
 
     std::stack<State*> states;
 
-    // Init functions
-    void initWindow();
-    void initStates();
-
 public:
 
     // C-tor / D-tor
@@ -28,7 +24,6 @@ public:
     // Other functions
     void endApp();
     void updateDT();
-    void updateSFMLEvents();
 
     // Main functions
     void update();
