@@ -55,5 +55,5 @@ void GameState::update(const float &dt)
 
 void GameState::render(std::shared_ptr<sf::RenderWindow> &window)
 {
-
+    window->draw(player.getPlayerShape());
 }

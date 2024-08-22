@@ -1,11 +1,14 @@
 #pragma once
 #include "../State.h"
+#include "../entities/Player.h"
 
 class GameState : public State{
 private:
 
     bool quit = false;
     sf::Event event;
+
+    Player player;
 
 public:
 
