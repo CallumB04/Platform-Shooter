@@ -17,7 +17,7 @@ private:
 public:
 
     // C-tor / D-tor
-    Player();
+    Player(sf::Vector2f startPos = {0.0f, 0.0f});
     virtual ~Player();
 
     // Get functions

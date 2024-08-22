@@ -2,12 +2,12 @@
 
 // Constructor / Destructor
 
-Player::Player()
+Player::Player(sf::Vector2f startPos)
 {
     // Initialising player variables
-    this->playerPosition = sf::Vector2f(WINDOW_WIDTH/2, WINDOW_HEIGHT/2);
+    this->playerPosition = startPos;
     this->playerSize = sf::Vector2f(35.0f, 60.0f);
-    this->playerWalkSpeed = 150.0f;
+    this->playerWalkSpeed = 250.0f;
 
     // Initialing player shape
     playerShape.setPosition(playerPosition);

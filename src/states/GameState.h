@@ -8,7 +8,7 @@ private:
     bool quit = false;
     sf::Event event;
 
-    Player player;
+    Player player = Player(sf::Vector2f(WINDOW_WIDTH/2, WINDOW_HEIGHT/2));
 
 public:
 
