@@ -20,8 +20,11 @@ public:
     Player();
     virtual ~Player();
 
-    // Other functions
+    // Get functions
     sf::Vector2f getPosition();
-    void setPosition(sf::Vector2f position);
     sf::RectangleShape getPlayerShape();
+    float getWalkSpeed();
+
+    // Set functions
+    void setPosition(sf::Vector2f position);
 };

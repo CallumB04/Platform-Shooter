@@ -37,7 +37,19 @@ void GameState::handleEvents(std::shared_ptr<sf::RenderWindow> &window, sf::Even
 
 void GameState::updateKeybinds(const float &dt)
 {
-    // Check for keypresses
+    /* Check for keypresses */
+
+    // Player horizontal movement (vertical movement through jumping + falling will be added)
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)){
+        sf::Vector2f position = player.getPosition();
+        position.x += (player.getWalkSpeed() * -1 * dt); // -1 because playing is moving left, closer to origin (0,0)
+        player.setPosition(sf::Vector2f(position.x, position.y)); // setting new player position after movement
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)){
+        sf::Vector2f position = player.getPosition();
+        position.x += (player.getWalkSpeed() * 1 * dt); // 1 because playing is moving right, further from origin (0,0)
+        player.setPosition(sf::Vector2f(position.x, position.y)); // setting new player position after movement
+    }
 }
 
 void GameState::updateEndingCheck()
