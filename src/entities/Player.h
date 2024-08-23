@@ -12,6 +12,7 @@ private:
     sf::Vector2f playerPosition;
     sf::Vector2f playerSize;
     float playerWalkSpeed;
+    bool isJump;
 
 
 public:
@@ -27,4 +28,8 @@ public:
 
     // Set functions
     void setPosition(sf::Vector2f position);
+
+    // Other functions
+    bool isGrounded();
+    bool isJumping();
 };

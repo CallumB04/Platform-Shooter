@@ -32,6 +32,18 @@ void Player::setPosition(sf::Vector2f position)
     playerShape.setPosition(position);
 }
 
+bool Player::isGrounded()
+{
+    if (this->playerPosition.y + playerSize.y == WINDOW_HEIGHT){ // Playing is touching the floor, return true. else return false
+        return true;
+    } return false;
+}
+
+bool Player::isJumping()
+{
+    return this->isJump;
+}
+
 sf::RectangleShape Player::getPlayerShape()
 {
     return playerShape;

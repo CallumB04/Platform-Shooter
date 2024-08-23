@@ -21,6 +21,7 @@ public:
 
     // Main Functions
     void handleEvents(std::shared_ptr<sf::RenderWindow> &window, sf::Event event);
+    void updateGravity(const float& dt);
     void updateKeybinds(const float& dt);
     void updateEndingCheck();
     void update(const float& dt);

@@ -35,6 +35,18 @@ void GameState::handleEvents(std::shared_ptr<sf::RenderWindow> &window, sf::Even
     }
 }
 
+void GameState::updateGravity(const float &dt)
+{
+    // Stops player from falling through the floor
+    sf::Vector2f position = player.getPosition();
+    if (position.y + player.getPlayerShape().getSize().y > WINDOW_HEIGHT) { player.setPosition({position.x, 0.0f}); }
+
+    // if player not touching ground, starts falling
+    if (!player.isGrounded()){
+        player.setPosition({position.x, position.y + 1});
+    }
+}
+
 void GameState::updateKeybinds(const float &dt)
 {
     /* Check for keypresses */
@@ -61,6 +73,7 @@ void GameState::updateEndingCheck()
 
 void GameState::update(const float &dt)
 {
+    this->updateGravity(dt);
     this->updateKeybinds(dt);
     this->updateEndingCheck();
 }
