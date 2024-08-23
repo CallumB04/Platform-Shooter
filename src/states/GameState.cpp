@@ -38,12 +38,28 @@ void GameState::handleEvents(std::shared_ptr<sf::RenderWindow> &window, sf::Even
 void GameState::updateGravity(const float &dt)
 {
     // Stops player from falling through the floor
-    sf::Vector2f position = player.getPosition();
-    if (position.y + player.getPlayerShape().getSize().y > WINDOW_HEIGHT) { player.setPosition({position.x, 0.0f}); }
+    if (player.getPosition().y + player.getSize().y > WINDOW_HEIGHT) { player.setPosition({player.getPosition().x, WINDOW_HEIGHT - player.getSize().y}); }
 
-    // if player not touching ground, starts falling
-    if (!player.isGrounded()){
-        player.setPosition({position.x, position.y + 1});
+    // settings falling momentum to 0 when player hits the ground
+    if (player.getPosition().y + player.getSize().y == WINDOW_HEIGHT){ player.setFallingMomentum(0.0f); }
+
+    // if player not touching ground and not mid-jumping, starts falling
+    if (!player.isGrounded() && !player.isJumping()){
+
+        float fallMomentum = player.getFallingMomentum();
+        player.setPosition({player.getPosition().x, player.getPosition().y + fallMomentum});
+        player.setFallingMomentum(fallMomentum + player.getFallingAcceleration());
+    }
+
+    // Updating player position whilst jumping
+    if (player.isJumping()){
+
+        // Ending jump when momentum reaches 0
+        if (player.getJumpingMomentum() <= 0.0f){ player.endJump(); return;}
+
+        float jumpMomentum = player.getJumpingMomentum();
+        player.setPosition({player.getPosition().x, player.getPosition().y - jumpMomentum});
+        player.setJumpingMomentum(jumpMomentum + player.getJumpingAcceleration());
     }
 }
 
@@ -51,7 +67,7 @@ void GameState::updateKeybinds(const float &dt)
 {
     /* Check for keypresses */
 
-    // Player horizontal movement (vertical movement through jumping + falling will be added)
+    // Player horizontal movement
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)){
         sf::Vector2f position = player.getPosition();
         position.x += (player.getWalkSpeed() * -1 * dt); // -1 because playing is moving left, closer to origin (0,0)
@@ -61,6 +77,11 @@ void GameState::updateKeybinds(const float &dt)
         sf::Vector2f position = player.getPosition();
         position.x += (player.getWalkSpeed() * 1 * dt); // 1 because playing is moving right, further from origin (0,0)
         player.setPosition(sf::Vector2f(position.x, position.y)); // setting new player position after movement
+    }
+
+    // Player jump if touching the ground
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && player.isGrounded()){
+        player.startJump(); // setting private variable isJump to true
     }
 }
 
