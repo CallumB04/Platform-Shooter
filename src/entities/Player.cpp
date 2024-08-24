@@ -6,19 +6,20 @@ Player::Player(sf::Vector2f startPos)
 {
     // Initialising player variables
     this->playerPosition = startPos;
-    this->playerSize = sf::Vector2f(35.0f, 60.0f);
+    this->playerSize = sf::Vector2f(50.0f, 100.0f);
     this->playerWalkSpeed = 250.0f;
     this->isJump = false;
+    this->fall = false;
     this->fallingMomentum = 0.0f;
-    this->fallingAcceleration = 600.0f;
+    this->fallingAcceleration = 700.0f;
     this->startJumpingMomentum = 400.0f; // allows jumpingMomentum to be reset to this value after each jump
     this->jumpingMomentum = this->startJumpingMomentum;
-    this->jumpingAcceleration = -800.0f;
+    this->jumpingAcceleration = -900.0f;
 
     // Initialing player shape
     playerShape.setPosition(playerPosition);
     playerShape.setSize(playerSize);
-    playerShape.setFillColor(sf::Color::White);
+    playerShape.setFillColor(sf::Color::Black);
 }
 
 Player::~Player()
@@ -64,9 +65,22 @@ void Player::endJump()
     this->jumpingMomentum = this->startJumpingMomentum;
 }
 
-bool Player::isGrounded()
+void Player::startFall()
 {
-    if (this->playerPosition.y + this->playerSize.y == WINDOW_HEIGHT){ // Playing is touching the floor, return true. else return false
+    this->fall = true;
+}
+
+void Player::endFall()
+{
+    this->fall = false;
+}
+
+
+bool Player::isGrounded(sf::RectangleShape platform)
+{
+    if (this->playerPosition.y + this->playerSize.y == platform.getPosition().y 
+    && (this->playerPosition.x + this->playerSize.x) > platform.getPosition().x 
+    && this->playerPosition.x < platform.getPosition().x + platform.getSize().x ){ // Playing is touching the platform, return true. else return false
         return true;
     } return false;
 }
@@ -74,6 +88,11 @@ bool Player::isGrounded()
 bool Player::isJumping()
 {
     return this->isJump;
+}
+
+bool Player::hasFallen()
+{
+    return this->fall;
 }
 
 sf::RectangleShape Player::getPlayerShape()

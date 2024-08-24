@@ -35,21 +35,50 @@ void GameState::handleEvents(std::shared_ptr<sf::RenderWindow> &window, sf::Even
     }
 }
 
-void GameState::updateGravity(const float &dt)
+void GameState::updateCollisions(const float &dt)
 {
-    // Stops player from falling through the floor
-    if (player.getPosition().y + player.getSize().y > WINDOW_HEIGHT) { player.setPosition({player.getPosition().x, WINDOW_HEIGHT - player.getSize().y}); }
-
-    // settings falling momentum to 0 when player hits the ground
-    if (player.getPosition().y + player.getSize().y == WINDOW_HEIGHT){ player.setFallingMomentum(0.0f); }
-
-    // if player not touching ground and not mid-jumping, starts falling
-    if (!player.isGrounded() && !player.isJumping()){
-
+    // if player not touching platform and not mid-jumping, starts falling
+    if (!player.isGrounded(platform.getPlatformShape()) && !player.isJumping()){
+        if (player.getPosition().x + player.getSize().x < platform.getPosition().x
+        || player.getPosition().x > platform.getPosition().x + platform.getSize().x)
+        {
+            player.startFall();
+        }
         float fallMomentum = player.getFallingMomentum();
         float fallAcceleration = player.getFallingAcceleration();
         player.setPosition({player.getPosition().x, player.getPosition().y + fallMomentum * dt});
         player.setFallingMomentum(fallMomentum + player.getFallingAcceleration() * dt);
+    }
+
+    // Stops player from falling through the platform
+    if (!player.hasFallen()
+    && player.getPosition().y + player.getSize().y > platform.getPosition().y 
+    && (player.getPosition().x + player.getSize().x) > platform.getPosition().x 
+    && player.getPosition().x < platform.getPosition().x + platform.getSize().x
+    && player.getPosition().y < platform.getPosition().y + platform.getSize().y) 
+    { 
+        player.setPosition({player.getPosition().x, platform.getPosition().y - player.getSize().y});
+    }
+
+    // Adding collisions between player and sides of platform
+    if (player.hasFallen() 
+    && player.getPosition().y + player.getSize().y > platform.getPosition().y
+    && player.getPosition().y < platform.getPosition().y + platform.getSize().y){
+        if (player.getPosition().x + player.getSize().x > platform.getPosition().x
+        && player.getPosition().x < WINDOW_WIDTH / 2){
+            player.setPosition({platform.getPosition().x - player.getSize().x, player.getPosition().y});
+        }
+        else if (player.getPosition().x < platform.getPosition().x + platform.getSize().x
+        && player.getPosition().x > WINDOW_WIDTH / 2){
+            player.setPosition({platform.getPosition().x + platform.getSize().x, player.getPosition().y});
+        }
+    }
+
+    // settings falling momentum to 0 and ends fall when player hits the platform
+    if (player.isGrounded(platform.getPlatformShape()))
+    { 
+        player.setFallingMomentum(0.0f); 
+        player.endFall();
     }
 
     // Updating player position whilst jumping
@@ -82,7 +111,7 @@ void GameState::updateKeybinds(const float &dt)
     }
 
     // Player jump if touching the ground
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && player.isGrounded()){
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && player.isGrounded(platform.getPlatformShape())){
         player.startJump(); // setting private variable isJump to true
     }
 }
@@ -90,13 +119,15 @@ void GameState::updateKeybinds(const float &dt)
 void GameState::updateEndingCheck()
 {
     // Checks for ways the state could end. then set this->quit to true
+
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)){ this->quit = true; }
 }
 
 // Main Functions
 
 void GameState::update(const float &dt)
 {
-    this->updateGravity(dt);
+    this->updateCollisions(dt);
     this->updateKeybinds(dt);
     this->updateEndingCheck();
 }
@@ -104,4 +135,5 @@ void GameState::update(const float &dt)
 void GameState::render(std::shared_ptr<sf::RenderWindow> &window)
 {
     window->draw(player.getPlayerShape());
+    window->draw(platform.getPlatformShape());
 }

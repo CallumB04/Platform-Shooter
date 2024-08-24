@@ -13,6 +13,7 @@ private:
     sf::Vector2f playerSize;
     float playerWalkSpeed;
     bool isJump;
+    bool fall;
     float fallingMomentum;
     float fallingAcceleration;
     float startJumpingMomentum;
@@ -42,8 +43,11 @@ public:
     void setJumpingMomentum(float momentum);
     void startJump();
     void endJump();
+    void startFall();
+    void endFall();
 
     // Other functions
-    bool isGrounded();
+    bool isGrounded(sf::RectangleShape platform);
     bool isJumping();
+    bool hasFallen();
 };

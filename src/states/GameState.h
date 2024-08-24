@@ -9,7 +9,8 @@ private:
     bool quit = false;
     sf::Event event;
 
-    Player player = Player(sf::Vector2f(WINDOW_WIDTH/2, WINDOW_HEIGHT/1.5));
+    Player player = Player(sf::Vector2f(WINDOW_WIDTH/2, WINDOW_HEIGHT/2));
+    Platform platform;
 
 public:
 
@@ -22,7 +23,7 @@ public:
 
     // Main Functions
     void handleEvents(std::shared_ptr<sf::RenderWindow> &window, sf::Event event);
-    void updateGravity(const float& dt);
+    void updateCollisions(const float& dt);
     void updateKeybinds(const float& dt);
     void updateEndingCheck();
     void update(const float& dt);
