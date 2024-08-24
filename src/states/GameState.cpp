@@ -47,8 +47,9 @@ void GameState::updateGravity(const float &dt)
     if (!player.isGrounded() && !player.isJumping()){
 
         float fallMomentum = player.getFallingMomentum();
-        player.setPosition({player.getPosition().x, player.getPosition().y + fallMomentum});
-        player.setFallingMomentum(fallMomentum + player.getFallingAcceleration());
+        float fallAcceleration = player.getFallingAcceleration();
+        player.setPosition({player.getPosition().x, player.getPosition().y + fallMomentum * dt});
+        player.setFallingMomentum(fallMomentum + player.getFallingAcceleration() * dt);
     }
 
     // Updating player position whilst jumping
@@ -58,8 +59,9 @@ void GameState::updateGravity(const float &dt)
         if (player.getJumpingMomentum() <= 0.0f){ player.endJump(); return;}
 
         float jumpMomentum = player.getJumpingMomentum();
-        player.setPosition({player.getPosition().x, player.getPosition().y - jumpMomentum});
-        player.setJumpingMomentum(jumpMomentum + player.getJumpingAcceleration());
+        float jumpAcceleration = player.getJumpingAcceleration();
+        player.setPosition({player.getPosition().x, player.getPosition().y - jumpMomentum * dt});
+        player.setJumpingMomentum(jumpMomentum + jumpAcceleration * dt);
     }
 }
 

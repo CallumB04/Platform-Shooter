@@ -10,10 +10,10 @@ Player::Player(sf::Vector2f startPos)
     this->playerWalkSpeed = 250.0f;
     this->isJump = false;
     this->fallingMomentum = 0.0f;
-    this->fallingAcceleration = 0.1f;
-    this->startJumpingMomentum = 5.0f; // allows jumpingMomentum to be reset to this value after each jump
+    this->fallingAcceleration = 600.0f;
+    this->startJumpingMomentum = 400.0f; // allows jumpingMomentum to be reset to this value after each jump
     this->jumpingMomentum = this->startJumpingMomentum;
-    this->jumpingAcceleration = -0.25f;
+    this->jumpingAcceleration = -800.0f;
 
     // Initialing player shape
     playerShape.setPosition(playerPosition);
