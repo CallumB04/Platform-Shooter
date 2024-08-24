@@ -8,7 +8,7 @@ FetchContent_Declare(
 
 set(SFML_BUILD_AUDIO FALSE)
 set(SFML_BUILD_NETWORK FALSE)
-set(SFML_SHARED_LIBS OFF)
+set(BUILD_SHARED_LIBS OFF)
 
 message(STATUS "Fetching SFML")
 FetchContent_MakeAvailable(sfml)
