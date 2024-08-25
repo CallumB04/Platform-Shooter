@@ -5,8 +5,9 @@ class Platform{
 
 private:
 
-    // Platform shape
+    // Platform shape + texture
     sf::RectangleShape platformShape;
+    sf::Texture platformTexture;
 
     // Platform variables
     sf::Vector2f platformPosition;

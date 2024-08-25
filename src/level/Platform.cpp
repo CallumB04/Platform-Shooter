@@ -5,14 +5,17 @@
 Platform::Platform()
 {
     // Initialising platform variables
-    this->platformSize = {1000, 50};
+    this->platformSize = {960, 105};
     this->platformPosition = {((WINDOW_WIDTH - platformSize.x) / 2), WINDOW_HEIGHT / 1.5};
-
 
     // Initialising platform shape object
     platformShape.setPosition(platformPosition);
     platformShape.setSize(platformSize);
-    platformShape.setFillColor(sf::Color::White);
+
+    // Initialising texture
+    platformTexture.loadFromFile("assets/platform.png");
+    platformShape.setTexture(&platformTexture);
+
 }
 
 Platform::~Platform()
