@@ -9,8 +9,10 @@ private:
     sf::RectangleShape playerShape;
 
     // Player variables
+    sf::Vector2f spawnPosition;
     sf::Vector2f playerPosition;
     sf::Vector2f playerSize;
+    int lives;
     float playerWalkSpeed;
     bool isJump;
     bool fall;
@@ -24,13 +26,14 @@ private:
 public:
 
     // C-tor / D-tor
-    Player(sf::Vector2f startPos = {0.0f, 0.0f});
+    Player(sf::Vector2f spawnPosition = {0.0f, 0.0f});
     virtual ~Player();
 
     // Get functions
     sf::Vector2f getPosition();
     sf::Vector2f getSize();
     sf::RectangleShape getPlayerShape();
+    int getLives();
     float getWalkSpeed();
     float getFallingMomentum();
     float getFallingAcceleration();
@@ -50,4 +53,6 @@ public:
     bool isGrounded(sf::RectangleShape platform);
     bool isJumping();
     bool hasFallen();
+    void respawn();
+    void removeLife();
 };

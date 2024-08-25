@@ -93,6 +93,11 @@ void GameState::updateCollisions(const float &dt)
         player.setPosition({player.getPosition().x, player.getPosition().y - jumpMomentum * dt});
         player.setJumpingMomentum(jumpMomentum + jumpAcceleration * dt);
     }
+
+    // Respawning if player has fallen out of the map
+    if (player.getPosition().y > WINDOW_HEIGHT){
+        player.respawn();
+    }
 }
 
 void GameState::updateKeybinds(const float &dt)
@@ -114,14 +119,21 @@ void GameState::updateKeybinds(const float &dt)
     // Player jump if touching the ground
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && player.isGrounded(platform.getPlatformShape())){
         player.startJump(); // setting private variable isJump to true
+        std::cout << player.getLives() << std::endl;
     }
 }
 
 void GameState::updateEndingCheck()
 {
-    // Checks for ways the state could end. then set this->quit to true
+    /* Checks for ways the state could end. then set this->quit to true */
 
+    // Pressing escape ends game state
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)){ this->quit = true; }
+
+    // If player lives is 0, end game
+    if (player.getLives() == 0){ this->quit = true; }
+
+
 }
 
 // Main Functions

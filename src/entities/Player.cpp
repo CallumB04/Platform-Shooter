@@ -2,11 +2,13 @@
 
 // Constructor / Destructor
 
-Player::Player(sf::Vector2f startPos)
+Player::Player(sf::Vector2f position)
 {
     // Initialising player variables
-    this->playerPosition = startPos;
+    this->spawnPosition = position;
+    this->playerPosition = this->spawnPosition;
     this->playerSize = sf::Vector2f(50.0f, 100.0f);
+    this->lives = 3;
     this->playerWalkSpeed = 250.0f;
     this->isJump = false;
     this->fall = false;
@@ -95,9 +97,27 @@ bool Player::hasFallen()
     return this->fall;
 }
 
+void Player::respawn()
+{
+    this->endFall();
+    this->removeLife();
+    this->playerPosition = this->spawnPosition;
+    playerShape.setPosition(this->playerPosition);
+}
+
+void Player::removeLife()
+{
+    this->lives -= 1;
+}
+
 sf::RectangleShape Player::getPlayerShape()
 {
     return playerShape;
+}
+
+int Player::getLives()
+{
+    return this->lives;
 }
 
 float Player::getWalkSpeed()
