@@ -39,8 +39,9 @@ void GameState::updateCollisions(const float &dt)
 {
     // if player not touching platform and not mid-jumping, starts falling
     if (!player.isGrounded(platform.getPlatformShape()) && !player.isJumping()){
-        if (player.getPosition().x + player.getSize().x < platform.getPosition().x
+        if ((player.getPosition().x + player.getSize().x < platform.getPosition().x
         || player.getPosition().x > platform.getPosition().x + platform.getSize().x)
+        && player.getPosition().y + player.getSize().y > platform.getPosition().y)
         {
             player.startFall();
         }
