@@ -6,7 +6,7 @@ Game::Game(){
 
     // Initialising Window and config
     this->window = std::make_shared<sf::RenderWindow>(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Platform-Shooter", sf::Style::Fullscreen);
-    //this->window->setFramerateLimit(120);
+    // this->window->setFramerateLimit(120);
 
     // Pushing states to the stack
     this->states.push(std::make_unique<GameState>(this->window));

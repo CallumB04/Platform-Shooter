@@ -135,6 +135,7 @@ void GameState::update(const float &dt)
 
 void GameState::render(std::shared_ptr<sf::RenderWindow> &window)
 {
+    window->draw(background.getBackgroundShape());
     window->draw(player.getPlayerShape());
     window->draw(platform.getPlatformShape());
 }

@@ -2,6 +2,7 @@
 #include "../State.h"
 #include "../entities/Player.h"
 #include "../level/Platform.h"
+#include "../level/Background.h"
 
 class GameState : public State{
 private:
@@ -11,6 +12,7 @@ private:
 
     Player player = Player(sf::Vector2f(WINDOW_WIDTH/2, WINDOW_HEIGHT/2));
     Platform platform;
+    Background background;
 
 public:
 
