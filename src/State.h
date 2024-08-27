@@ -16,6 +16,7 @@ public:
     // Ending/Removing state Functions
     virtual bool getQuit() = 0; // returns value of quit boolean
     virtual void endState() = 0;
+    virtual bool forceExit() = 0;
 
     // Main Functions
     // Any class that inherits State class, must have an Update and Render function

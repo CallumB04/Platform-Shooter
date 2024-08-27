@@ -22,6 +22,11 @@ void GameState::endState()
     // What to do when state is ending...
 }
 
+bool GameState::forceExit()
+{
+    return this->isExit;
+}
+
 // Update Functions
 
 void GameState::handleEvents(std::shared_ptr<sf::RenderWindow> &window, sf::Event event)
@@ -119,7 +124,6 @@ void GameState::updateKeybinds(const float &dt)
     // Player jump if touching the ground
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && player.isGrounded(platform.getPlatformShape())){
         player.startJump(); // setting private variable isJump to true
-        std::cout << player.getLives() << std::endl;
     }
 }
 
@@ -147,7 +151,7 @@ void GameState::update(const float &dt)
 
 void GameState::render(std::shared_ptr<sf::RenderWindow> &window)
 {
-    window->draw(background.getBackgroundShape());
+    window->draw(background.getGameBackgroundShape());
     window->draw(player.getPlayerShape());
     window->draw(platform.getPlatformShape());
 }

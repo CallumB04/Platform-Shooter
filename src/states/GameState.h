@@ -9,6 +9,7 @@ private:
 
     bool quit = false;
     sf::Event event;
+    bool isExit = false; // if set to true, game and window will force close
 
     Player player = Player(sf::Vector2f(WINDOW_WIDTH/2, WINDOW_HEIGHT/2));
     Platform platform;
@@ -22,6 +23,7 @@ public:
 
     bool getQuit(); // Checks if state needs to be removed
     void endState(); // Performs all necessary actions when state is removed
+    bool forceExit();
 
     // Main Functions
     void handleEvents(std::shared_ptr<sf::RenderWindow> &window, sf::Event event);
