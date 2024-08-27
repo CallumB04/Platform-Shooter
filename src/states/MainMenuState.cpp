@@ -10,6 +10,25 @@ void MainMenuState::checkMenuClick(sf::Event::MouseButtonEvent mouse)
     else if (menuButton_Exit.getGlobalBounds().contains(mousePosition)){ this->isExit = true; }
 }
 
+void MainMenuState::checkMousePosition(sf::Event::MouseMoveEvent mouse)
+{
+    // Getting mouse current X and Y position
+    sf::Vector2f mousePosition = { (float) mouse.x, (float) mouse.y };
+
+    // Changes button textures to hover when mouse is touching them
+    if (menuButton_Play.getGlobalBounds().contains(mousePosition)){ menuButton_Play.setTexture(&playButtonTexture_hover); }
+    else if (menuButton_Settings.getGlobalBounds().contains(mousePosition)){ menuButton_Settings.setTexture(&settingsButtonTexture_hover); }
+    else if (menuButton_Exit.getGlobalBounds().contains(mousePosition)){ menuButton_Exit.setTexture(&exitButtonTexture_hover); }
+
+    else
+    {
+        // Resets all menu buttons to non-hover textures
+        menuButton_Play.setTexture(&playButtonTexture);
+        menuButton_Settings.setTexture(&settingsButtonTexture); 
+        menuButton_Exit.setTexture(&exitButtonTexture);
+    }
+}
+
 void MainMenuState::initMenuButtons()
 {
     // Initialising values for central menu buttons (Play, settings, exit)
@@ -20,16 +39,19 @@ void MainMenuState::initMenuButtons()
     menuButton_Play.setSize(centralMenuButtonsSize);
     menuButton_Play.setPosition({centralMenuButtonsX, WINDOW_HEIGHT * 0.42f});
     playButtonTexture.loadFromFile("assets/main-menu-buttons/play.png");
+    playButtonTexture_hover.loadFromFile("assets/main-menu-buttons/play-hover.png");
     menuButton_Play.setTexture(&playButtonTexture);
 
     menuButton_Settings.setSize(centralMenuButtonsSize);
     menuButton_Settings.setPosition({centralMenuButtonsX, WINDOW_HEIGHT * 0.56f});
     settingsButtonTexture.loadFromFile("assets/main-menu-buttons/settings.png");
+    settingsButtonTexture_hover.loadFromFile("assets/main-menu-buttons/settings-hover.png");
     menuButton_Settings.setTexture(&settingsButtonTexture);
 
     menuButton_Exit.setSize(centralMenuButtonsSize);
     menuButton_Exit.setPosition({centralMenuButtonsX, WINDOW_HEIGHT * 0.7f});
     exitButtonTexture.loadFromFile("assets/main-menu-buttons/exit.png");
+    exitButtonTexture_hover.loadFromFile("assets/main-menu-buttons/exit-hover.png");
     menuButton_Exit.setTexture(&exitButtonTexture);
 }
 
@@ -70,8 +92,13 @@ void MainMenuState::handleEvents(std::shared_ptr<sf::RenderWindow> &window, sf::
             case sf::Event::Closed:
                 window->close();
                 break;
+
             case sf::Event::MouseButtonPressed:
                 if (event.key.code == sf::Mouse::Left){ this->checkMenuClick(event.mouseButton); }
+                break;
+
+            case sf::Event::MouseMoved:
+                this->checkMousePosition(event.mouseMove);
                 break;
         }
     }

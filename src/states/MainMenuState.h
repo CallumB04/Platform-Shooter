@@ -20,6 +20,9 @@ private:
     sf::Texture playButtonTexture;
     sf::Texture settingsButtonTexture;
     sf::Texture exitButtonTexture;
+    sf::Texture playButtonTexture_hover;
+    sf::Texture settingsButtonTexture_hover;
+    sf::Texture exitButtonTexture_hover;
 
     sf::Vector2f centralMenuButtonsSize;
     float centralMenuButtonsX;
@@ -32,6 +35,7 @@ private:
     // private functions
     void initMenuButtons();
     void checkMenuClick(sf::Event::MouseButtonEvent event);
+    void checkMousePosition(sf::Event::MouseMoveEvent mouse);
 
 public:
 
