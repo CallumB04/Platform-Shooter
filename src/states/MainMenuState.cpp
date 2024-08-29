@@ -107,6 +107,12 @@ void MainMenuState::handleEvents(std::shared_ptr<sf::RenderWindow> &window, sf::
 void MainMenuState::updateKeybinds(const float &dt)
 {
     // Check for keypresses
+
+    if (isSettings){
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)){
+            this->isSettings = false;
+        }
+    }
 }
 
 void MainMenuState::updateEndingCheck()
@@ -130,8 +136,16 @@ void MainMenuState::render(std::shared_ptr<sf::RenderWindow> &window)
     // Drawing Background
     window->draw(this->background.getMenuBackgroundShape());
 
-    // Drawing main menu buttons
-    window->draw(menuButton_Play);
-    window->draw(menuButton_Settings);
-    window->draw(menuButton_Exit);
+    // Main Menu
+    if (!this->isSettings){
+        // Drawing main menu buttons
+        window->draw(menuButton_Play);
+        window->draw(menuButton_Settings);
+        window->draw(menuButton_Exit);
+    } 
+    
+    // Settings Menu
+    else if (this->isSettings){
+        
+    }
 }
