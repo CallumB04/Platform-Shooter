@@ -36,6 +36,18 @@ void GameState::handleEvents(std::shared_ptr<sf::RenderWindow> &window, sf::Even
             case sf::Event::Closed:
                 window->close();
                 break;
+            case sf::Event::KeyPressed:
+                if (event.key.code == sf::Keyboard::Comma && !this->hasShot)
+                {
+                    sf::Vector2f playerPos = player.getPosition();
+                    Bullet bullet({playerPos.x + (player.getSize().x / 2), playerPos.y + (player.getSize().y / 2)}, player.getDirection());
+                    bullets.push_back(bullet);
+                    this->hasShot = true;
+                }
+                break;
+            case sf::Event::KeyReleased:
+                if (event.key.code == sf::Keyboard::Comma) { this->hasShot = false; }
+                break;
         }
     }
 }
@@ -103,6 +115,30 @@ void GameState::updateCollisions(const float &dt)
     if (player.getPosition().y > WINDOW_HEIGHT){
         player.respawn();
     }
+
+
+    /* Updating bullet positions */
+    int bulletCounter { 0 }; // counter to allow for removal of bullets in array
+    std::vector<int> bulletsToRemove; // vector to store indexes of bullets to remove after iterated through
+
+    // Iterating bullets
+    for (Bullet &bullet : bullets)
+    {
+        // Checking if bullet has left the window, if so push to vector for deletion
+        if (bullet.getPosition().x > WINDOW_WIDTH || bullet.getPosition().x + bullet.getSize().x < 0)
+            bulletsToRemove.push_back(bulletCounter);
+
+        sf::Vector2f position = bullet.getPosition();
+        position.x += bullet.getSpeed() * dt * bullet.getDirection();
+        bullet.setPosition(position);
+        bulletCounter++;
+    }
+
+    std::cout << "Bullets on screen: " << bulletCounter << std::endl;
+
+    // Deleting no longer wanted bullets
+    for (int index: bulletsToRemove)
+        bullets.erase(bullets.begin() + index);
 }
 
 void GameState::updateKeybinds(const float &dt)
@@ -114,11 +150,13 @@ void GameState::updateKeybinds(const float &dt)
         sf::Vector2f position = player.getPosition();
         position.x += (player.getWalkSpeed() * -1 * dt); // -1 because playing is moving left, closer to origin (0,0)
         player.setPosition(sf::Vector2f(position.x, position.y)); // setting new player position after movement
+        player.setDirection(-1);
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)){
         sf::Vector2f position = player.getPosition();
         position.x += (player.getWalkSpeed() * 1 * dt); // 1 because playing is moving right, further from origin (0,0)
         player.setPosition(sf::Vector2f(position.x, position.y)); // setting new player position after movement
+        player.setDirection(1);
     }
 
     // Player jump if touching the ground
@@ -136,8 +174,6 @@ void GameState::updateEndingCheck()
 
     // If player lives is 0, end game
     if (player.getLives() == 0){ this->quit = true; }
-
-
 }
 
 // Main Functions
@@ -151,7 +187,14 @@ void GameState::update(const float &dt)
 
 void GameState::render(std::shared_ptr<sf::RenderWindow> &window)
 {
+    // render background + platform first
     window->draw(background.getGameBackgroundShape());
-    window->draw(player.getPlayerShape());
     window->draw(platform.getPlatformShape());
+
+    // render bullets behind player
+    for (Bullet &bullet : bullets)
+        window->draw(bullet.getShape());
+
+    // render player on top
+    window->draw(player.getPlayerShape());
 }

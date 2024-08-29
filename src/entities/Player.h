@@ -21,6 +21,7 @@ private:
     float startJumpingMomentum;
     float jumpingMomentum;
     float jumpingAcceleration;
+    int direction; // 1 - facing right, 2 - facing left
 
 
 public:
@@ -39,6 +40,7 @@ public:
     float getFallingAcceleration();
     float getJumpingMomentum();
     float getJumpingAcceleration();
+    int getDirection();
 
     // Set functions
     void setPosition(sf::Vector2f position);
@@ -48,6 +50,7 @@ public:
     void endJump();
     void startFall();
     void endFall();
+    void setDirection(int direction);
 
     // Other functions
     bool isGrounded(sf::RectangleShape platform);

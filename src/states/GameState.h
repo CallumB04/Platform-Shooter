@@ -1,19 +1,25 @@
 #pragma once
 #include "../State.h"
 #include "../entities/Player.h"
+#include "../entities/Bullet.h"
 #include "../level/Platform.h"
 #include "../level/Background.h"
 
 class GameState : public State{
 private:
 
+    // Class variables
     bool quit = false;
     sf::Event event;
     bool isExit = false; // if set to true, game and window will force close
 
+    // Initialising objects from other entities/level objects
     Player player = Player(sf::Vector2f(WINDOW_WIDTH/2, WINDOW_HEIGHT/2));
     Platform platform;
     Background background;
+
+    std::vector<Bullet> bullets = {};
+    bool hasShot = false; // prevents player for holding Comma to spray bullets
 
 public:
 

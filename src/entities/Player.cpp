@@ -17,6 +17,7 @@ Player::Player(sf::Vector2f position)
     this->startJumpingMomentum = 400.0f; // allows jumpingMomentum to be reset to this value after each jump
     this->jumpingMomentum = this->startJumpingMomentum;
     this->jumpingAcceleration = -1000.0f;
+    this->direction = 1;
 
     // Initialing player shape
     playerShape.setPosition(playerPosition);
@@ -77,6 +78,10 @@ void Player::endFall()
     this->fall = false;
 }
 
+void Player::setDirection(int direction)
+{
+    this->direction = direction;
+}
 
 bool Player::isGrounded(sf::RectangleShape platform)
 {
@@ -143,4 +148,9 @@ float Player::getJumpingMomentum()
 float Player::getJumpingAcceleration()
 {
     return this->jumpingAcceleration;
+}
+
+int Player::getDirection()
+{
+    return this->direction;
 }
