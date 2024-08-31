@@ -59,6 +59,9 @@ void MainMenuState::initMenuButtons()
 
 MainMenuState::MainMenuState(std::shared_ptr<sf::RenderWindow> &window) : State(window)
 {
+    // Load background asset in class
+    this->background.initMenuBackground();
+
     this->initMenuButtons();
 }
 

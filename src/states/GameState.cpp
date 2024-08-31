@@ -4,6 +4,7 @@
 
 GameState::GameState(std::shared_ptr<sf::RenderWindow> &window) : State(window)
 {
+    this->background.initGameBackground();
 }
 
 GameState::~GameState()
