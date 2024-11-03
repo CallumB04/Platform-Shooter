@@ -1,20 +1,20 @@
 #pragma once
 #include "../includes.h"
 
-class Platform{
+class Platform
+{
 
 private:
-
     // Platform shape + texture
     sf::RectangleShape platformShape;
     sf::Texture platformTexture;
+    sf::VideoMode desktop = sf::VideoMode::getDesktopMode(); // desktop width and height
 
     // Platform variables
     sf::Vector2f platformPosition;
     sf::Vector2f platformSize;
 
 public:
-
     // C-tor / D-tor
     Platform();
     virtual ~Platform();
