@@ -3,9 +3,9 @@
 Bullet::Bullet(sf::Vector2f startPosition, int direction)
 {
     // Initialising bullet
-    this->size = {20.0f, 8.0f};
+    this->size = {20.0f * screenScale.x, 8.0f * screenScale.y};
     this->position = startPosition;
-    this->speed = 700.0f;
+    this->speed = 700.0f * screenScale.x;
     this->direction = direction;
 
     bullet.setFillColor(sf::Color::White);
@@ -13,7 +13,7 @@ Bullet::Bullet(sf::Vector2f startPosition, int direction)
     bullet.setSize(size);
 }
 
-Bullet::~Bullet(){}
+Bullet::~Bullet() {}
 
 sf::RectangleShape &Bullet::getShape()
 {

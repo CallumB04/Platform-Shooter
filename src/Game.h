@@ -3,10 +3,10 @@
 #include "states/GameState.h"
 #include "states/MainMenuState.h"
 
-class Game{
+class Game
+{
 
 private:
-
     // Variables
     std::shared_ptr<sf::RenderWindow> window;
     sf::Event event;
@@ -18,7 +18,6 @@ private:
     std::stack<std::unique_ptr<State>> states;
 
 public:
-
     // C-tor / D-tor
     Game();
     virtual ~Game();

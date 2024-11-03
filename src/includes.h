@@ -8,5 +8,6 @@
 #include <vector>
 #include <memory>
 
-#define WINDOW_WIDTH 1600
-#define WINDOW_HEIGHT 900
+// base window height for calculating resolution independence
+#define BASE_WIDTH 1920
+#define BASE_HEIGHT 1080
