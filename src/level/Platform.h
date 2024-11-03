@@ -9,6 +9,7 @@ private:
     sf::RectangleShape platformShape;
     sf::Texture platformTexture;
     sf::VideoMode desktop = sf::VideoMode::getDesktopMode(); // desktop width and height
+    float screenScale = static_cast<float>(desktop.width) / BASE_WIDTH;
 
     // Platform variables
     sf::Vector2f platformPosition;

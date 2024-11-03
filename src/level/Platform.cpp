@@ -5,7 +5,7 @@
 Platform::Platform()
 {
     // Initialising platform variables
-    this->platformSize = {960, 105};
+    this->platformSize = {960 * screenScale, 105 * screenScale};
     this->platformPosition = {((desktop.width - platformSize.x) / 2), desktop.height / 1.5f};
 
     // Initialising platform shape object
