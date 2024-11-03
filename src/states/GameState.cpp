@@ -5,7 +5,7 @@
 GameState::GameState(std::shared_ptr<sf::RenderWindow> &window) : State(window)
 {
     this->background.initGameBackground();
-    this->player = Player(sf::Vector2f(desktop.width / 2, desktop.height / 2));
+    this->player = Player(sf::Vector2f(static_cast<float>(desktop.width) / 2, static_cast<float>(desktop.height) / 2));
 }
 
 GameState::~GameState()
